@@ -2,5 +2,5 @@
 
 int main()
 {
-    hashtable htb(10);
+    hashtable htb(10, hashCounter);
 }

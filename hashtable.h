@@ -1,11 +1,14 @@
-#pragma once
+// #pragma once
+#ifndef HASHTABLE_H
+#define HASHTABLE_H
+
 #include <iostream>
 
 #define HASHTABELSIZE 100
 
 struct listEl
 {
-    int num;
+    char* word;
     listEl* next;
 };
 
@@ -21,28 +24,13 @@ class hashtable
     private:
         list* lists_;
         size_t size_;
-        void (hashCounter*) (char* word);
+        int (*hashCounter_) (char* word);
 
     public:
-        hashtable(size_t size, void (*hashCounter) (char* word))
-        {
-            std::cout << "+++ Construction +++ \n";
-            size_ = size;
-            lists_ = new list [size];
-            has
-            std::cout << "Construction has been complited \n";
-        }
-
-        ~hashtable()
-        {
-            size_ = 0;
-            delete lists;
-        }
+        hashtable(size_t size, int (*hashCounter) (char* word));
+        ~hashtable();
 };
 
-/*typedef struct
-{
-    *list listData;
-    size_t size;
-    void (*hashCounter) (char* word);
-}hashtable;*/
+int hashCounter(char* word);
+
+#endif
