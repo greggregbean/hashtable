@@ -10,8 +10,7 @@
   2. В консоли зайди в склоннированный репозиторий.
   3. Пропиши make.
   
-P.S. Если хочешь, попробуй вставить или найти какое-нибудь слово в хэш-таблицу с помощью функции
-  a) int hashtable::htbInsert(const char* word) для вставки 
-  b) int hashtable::htbFind(const char* word) для поиска.
+P.S. Если хочешь, попробуй вставить или найти какое-нибудь слово в хэш-таблицу с помощью функциq: int hashtable::htbInsert(const char* word) для вставки 
+и int hashtable::htbFind(const char* word) для поиска.
 
 Приятного пользования!
