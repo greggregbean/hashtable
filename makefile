@@ -1,2 +1,2 @@
 all:
-	g++ hashtablefunctions.cpp main.cpp -o run
+	g++ -Wall hashtablefunctions.cpp main.cpp -o run

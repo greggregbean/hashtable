@@ -1,21 +1,20 @@
-// #pragma once
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
 #include <iostream>
+#include <string.h>
 
-#define HASHTABELSIZE 100
+#define HASHTABELSIZE 10
 
 struct listEl
 {
-    char* word;
+    const char* word;
     listEl* next;
 };
 
 struct list
 {
     listEl* head;
-    int numOfEl;
     int hash;
 };
 
@@ -24,13 +23,17 @@ class hashtable
     private:
         list* lists_;
         size_t size_;
-        int (*hashCounter_) (char* word);
+        int (*hashCounter_) (const char* word);
 
     public:
-        hashtable(size_t size, int (*hashCounter) (char* word));
+        hashtable(size_t size, int (*hashCounter) (const char* word));
         ~hashtable();
+        void htbDump();
+        int htbInsert(const char* word);
+        
 };
 
-int hashCounter(char* word);
+int hashCounter(const char* word);
+void listInsert(list* lst, const char* word);
 
 #endif
