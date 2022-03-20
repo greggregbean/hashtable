@@ -22,7 +22,22 @@ hashtable::~hashtable()
 {
     std::cout << "--- DISTRUCTOR ---" << std::endl;
 
+    for (size_t i = 0; i <= this -> size_; i++)
+    {
+        listEl* next = (this -> lists_[i]).head;
+
+        listEl* oldnext;
+
+        while(next != nullptr)
+        {
+            oldnext = (*next).next;
+            delete next;
+            next = oldnext;
+        }
+    }
+
     size_ = 0;
+
     delete [] lists_;
 
     std::cout << "Distruction has been complited \n" << std::endl;
@@ -68,11 +83,11 @@ int hashCounter(const char* word)
 
 void listInsert(list* lst, const char* word)
 {
-    listEl newWord;
+    listEl* newWord = new listEl;
     listEl* oldnext = lst -> head; 
-    lst -> head = &newWord;
-    newWord.next = oldnext;
-    newWord.word = word; 
+    lst -> head = newWord;
+    newWord->next = oldnext;
+    newWord->word = word; 
     (lst -> numOfEl) ++;
 }
 
@@ -96,7 +111,7 @@ int hashtable::htbInsert(const char* word)
 
     // Если не нашли такой хэш, то создаём новый список
     (this -> lists_[size_]).hash = hash;
-    listInsert(&(this -> lists_[size_+1]), word);  
+    listInsert(&(this -> lists_[size_]), word);  
     (this -> size_) ++;
 
     this -> htbDump();

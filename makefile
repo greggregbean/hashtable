@@ -1,2 +1,2 @@
 all:
-	g++ -Wall hashtablefunctions.cpp main.cpp -o run
+	g++ -Wall -Wextra -Wpedantic hashtablefunctions.cpp main.cpp -o run
