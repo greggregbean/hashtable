@@ -11,7 +11,7 @@
   3. Пропиши make.
   
 P.S. Если хочешь, попробуй вставить или найти какое-нибудь слово в хэш-таблицу с помощью функции
-int hashtable::htbInsert(const char* word) для вставки и int hashtable::htbFind(const char* word)
+   int hashtable::htbInsert(const char* word) для вставки и int hashtable::htbFind(const char* word)
 для поиска.
 
 Приятного пользования!
