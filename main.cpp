@@ -2,6 +2,7 @@
 
 int main()
 {
-    hashtable htb(HASHTABELSIZE, hashCounter);
+    hashtable htb(HASHTABELCAPACITY, hashCounter);
     htb.htbInsert("Mama");
+    htb.htbInsert("Papa");
 }

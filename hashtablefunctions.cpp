@@ -2,35 +2,66 @@
 
 hashtable::hashtable(size_t capacity, int (*hashCounter) (const char* word))
 {
-    std::cout << "+++ CONSTRUCTOR +++ \n";
+    std::cout << "+++ CONSTRUCTOR +++" << std::endl;
+
     size_ = 0;
+
     lists_ = new list [capacity];
+    for (size_t i = 0; i <= capacity; i++)
+    {
+        (lists_[i]).head = nullptr;
+        (lists_[i]).numOfEl = 0;
+    }
+
     hashCounter_ = hashCounter;
-    std::cout << "Construction has been complited \n";
+
+    std::cout << "Construction has been complited \n" << std::endl;
 }
 
 hashtable::~hashtable()
 {
-    std::cout << "--- DISTRUCTOR --- \n";
+    std::cout << "--- DISTRUCTOR ---" << std::endl;
+
     size_ = 0;
     delete [] lists_;
-    std::cout << "Construction has been complited \n";
+
+    std::cout << "Distruction has been complited \n" << std::endl;
+}
+
+void listDump(list lst)
+{
+    listEl* next = lst.head;
+
+    assert(next != nullptr);
+
+    for(size_t i = 0; i < lst.numOfEl; i++)
+    {
+        std::cout << "[" << next << "] \"" << (*next).word << "\" (Next: " << (*next).next << ")" << "," << std::endl;
+        next = (*next).next;
+    }
+}
+
+void hashtable::htbDump()
+{
+    std::cout << "HTBDUMP (size = " << this -> size_ << "):\n" << std::endl;
+    for (size_t i = 0; i < this -> size_; i++)
+    {
+        std::cout << "List [" << i << "] " << "(hash = " << (this ->lists_[i]).hash << ", numOfEl: " << (this -> lists_[i]).numOfEl << "): \n";
+        listDump(this -> lists_[i]);
+        std::cout << std::endl;
+    }
 }
 
 int hashCounter(const char* word)
-{
-    std::cout << "\nHASHCOUNTER \n";
-    std::cout << "Word: " << word << std::endl; 
+{ 
     int i = 0;
     int sum = 0;
 
-    while(word[i] != '\0')
+    while (word[i] != '\0')
     {
         sum += (int) word[i];
         i++;
-    }                                                                                                                                                                                                                                  
-
-    std::cout << "It's hash: " << sum%100 << "\n" << std::endl;
+    }           
 
     return sum % 100; 
 }
@@ -42,17 +73,21 @@ void listInsert(list* lst, const char* word)
     lst -> head = &newWord;
     newWord.next = oldnext;
     newWord.word = word; 
+    (lst -> numOfEl) ++;
 }
 
 int hashtable::htbInsert(const char* word)
 {
+    std::cout << "HTBINSERT:\nWord: " << word << std::endl;
+
     // Считаем хэш
     float hash = this -> hashCounter_(word);
+    std::cout << "It's hash: " << hash << "\n" << std::endl;
 
     // Ищем список с таким хэшом
-    for(size_t i = 0; i <= this -> size_; i++)
+    for (size_t i = 0; i <= this -> size_; i++)
     {
-        if((this -> lists_[i]).hash == hash)
+        if ((this -> lists_[i]).hash == hash)
         {
             listInsert(&(this -> lists_[i]), word);
             return hash;
@@ -61,8 +96,10 @@ int hashtable::htbInsert(const char* word)
 
     // Если не нашли такой хэш, то создаём новый список
     (this -> lists_[size_]).hash = hash;
-    listInsert(&(this -> lists_[size_]), word);  
+    listInsert(&(this -> lists_[size_+1]), word);  
     (this -> size_) ++;
+
+    this -> htbDump();
 
     return hash;
 }

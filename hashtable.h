@@ -3,8 +3,9 @@
 
 #include <iostream>
 #include <string.h>
+#include <assert.h>
 
-#define HASHTABELSIZE 10
+#define HASHTABELCAPACITY 100
 
 struct listEl
 {
@@ -16,6 +17,7 @@ struct list
 {
     listEl* head;
     int hash;
+    size_t numOfEl;
 };
 
 class hashtable
