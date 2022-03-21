@@ -3,6 +3,6 @@
 int main()
 {
     hashtable htb(HASHTABELCAPACITY, hashCounter);
-    htb.htbInsert("Mama");
-    htb.htbInsert("Papa");
+    htb.htbInsert("dede");
+    htb.htbFind("df");
 }

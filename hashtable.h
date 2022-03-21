@@ -6,6 +6,8 @@
 #include <assert.h>
 
 #define HASHTABELCAPACITY 100
+#define NOTFOUNDINLST -1
+#define NOTFOUNDINHTB -1
 
 struct listEl
 {
@@ -31,11 +33,13 @@ class hashtable
         hashtable(size_t size, int (*hashCounter) (const char* word));
         ~hashtable();
         void htbDump();
-        int htbInsert(const char* word);
+        listEl* htbInsert(const char* word);
+        listEl* htbFind(const char* word);
         
 };
 
 int hashCounter(const char* word);
-void listInsert(list* lst, const char* word);
+listEl* listFind(list lst, const char* word);
+listEl* listInsert(list* lst, const char* word);
 
 #endif

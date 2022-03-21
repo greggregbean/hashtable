@@ -81,7 +81,7 @@ int hashCounter(const char* word)
     return sum % 100; 
 }
 
-void listInsert(list* lst, const char* word)
+listEl* listInsert(list* lst, const char* word)
 {
     listEl* newWord = new listEl;
     listEl* oldnext = lst -> head; 
@@ -89,14 +89,16 @@ void listInsert(list* lst, const char* word)
     newWord->next = oldnext;
     newWord->word = word; 
     (lst -> numOfEl) ++;
+
+    return newWord;
 }
 
-int hashtable::htbInsert(const char* word)
+listEl* hashtable::htbInsert(const char* word)
 {
     std::cout << "HTBINSERT:\nWord: " << word << std::endl;
 
     // Считаем хэш
-    float hash = this -> hashCounter_(word);
+    int hash = this -> hashCounter_(word);
     std::cout << "It's hash: " << hash << "\n" << std::endl;
 
     // Ищем список с таким хэшом
@@ -104,17 +106,94 @@ int hashtable::htbInsert(const char* word)
     {
         if ((this -> lists_[i]).hash == hash)
         {
-            listInsert(&(this -> lists_[i]), word);
-            return hash;
+            listEl* pointer = listInsert(&(this -> lists_[i]), word);
+            this -> htbDump();
+            return pointer;
         }
     }
 
     // Если не нашли такой хэш, то создаём новый список
     (this -> lists_[size_]).hash = hash;
-    listInsert(&(this -> lists_[size_]), word);  
+    listEl* newWord = listInsert(&(this -> lists_[size_]), word);  
     (this -> size_) ++;
 
     this -> htbDump();
 
-    return hash;
+    return newWord;
+}
+
+listEl* listFind(list lst, const char* word)
+{
+    listEl* next = lst.head;
+
+    while(next != nullptr)
+    {
+        if(strcmp((*next).word, word) == 0)
+        {
+            return next;
+        }
+
+        next = (*next).next;
+    }
+
+    return nullptr;
+}
+
+listEl* hashtable::htbFind(const char* word)
+{
+     std::cout << "HTBFIND:\nWord: " << word << std::endl;
+    
+    int hash = this -> hashCounter_(word);
+    std::cout << "It's hash: " << hash << "\n" << std::endl;
+
+    for (size_t i = 0; i <= this -> size_; i++)
+    {
+        if((this -> lists_[i]).hash == hash)
+        {
+            listEl* pointer = listFind(this -> lists_[i], word);
+
+            if(pointer == nullptr)
+            {
+                std::cout << "The word is not found in list. Do you want to add it? (y/ any key)" << std::endl;
+                char answer;
+                std::cin >> answer;
+                std::cout << std::endl;
+
+                if(answer == 'y')
+                {
+                    pointer = this -> htbInsert(word);
+                    std::cout << "Word has been added. \n" << std::endl;
+                    return pointer;
+                }
+
+                else
+                {
+                    std::cout << "Word has not been added. \n" << std::endl;
+                    return nullptr;
+                }
+            }
+
+            else
+            {
+                std::cout << "Your word in the " << i << " list, it's ponter: " << pointer << ". \n" << std::endl; 
+                return pointer;    
+            }
+        }    
+    }
+
+    std::cout << "The word is not found in hashtable. Do you want to add it? (y/ any key)" << std::endl;
+    char answer;
+    std::cin >> answer;
+    std::cout << std::endl;
+
+    if(answer == 'y')
+    {
+        listEl* pointer = this -> htbInsert(word);
+        std::cout << "Word has been added. \n" << std::endl;
+        return pointer;
+    }
+
+    std::cout << "Word has not been added. \n" << std::endl;
+    
+    return nullptr;  
 }
