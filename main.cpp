@@ -7,6 +7,7 @@ int main()
     htb.htbInsert("dede");
     htb.htbFind("df");
     htb.htbInsert("Mama");
+    htb.htbInsert("Papa");
     htb.graphDump(&textGraph);
     textGraph.close();
 }
