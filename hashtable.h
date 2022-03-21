@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include <assert.h>
+#include <fstream>
 
 #define HASHTABELCAPACITY 100
 #define NOTFOUNDINLST -1
@@ -35,11 +36,13 @@ class hashtable
         void htbDump();
         listEl* htbInsert(const char* word);
         listEl* htbFind(const char* word);
+        void graphDump(std::ofstream* textGraph);
         
 };
 
 int hashCounter(const char* word);
 listEl* listFind(list lst, const char* word);
 listEl* listInsert(list* lst, const char* word);
+void listGraphDump(std::ofstream textGraph, list lst);
 
 #endif

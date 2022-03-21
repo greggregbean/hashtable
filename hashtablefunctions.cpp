@@ -141,7 +141,7 @@ listEl* listFind(list lst, const char* word)
 
 listEl* hashtable::htbFind(const char* word)
 {
-     std::cout << "HTBFIND:\nWord: " << word << std::endl;
+    std::cout << "HTBFIND:\nWord: " << word << std::endl;
     
     int hash = this -> hashCounter_(word);
     std::cout << "It's hash: " << hash << "\n" << std::endl;
@@ -197,3 +197,77 @@ listEl* hashtable::htbFind(const char* word)
     
     return nullptr;  
 }
+
+void listGraphDump(std::ofstream* textGraph, list lst)
+{
+    listEl* next = lst.head;
+
+    size_t i = 1;
+
+    while (next != nullptr)
+    {
+        (*textGraph) << " " << (*next).word << " [shape=record, fillcolor = darkolivegreen2, style = filled, label = \" " 
+        << i << " | {Word: " << (*next).word << "| Addr: "
+        << next << "| Next: "<< (*next).next <<"} \"]" << std::endl;
+
+        next = (*next).next;
+        i++;
+    }
+    
+    next = lst.head;
+
+    while ( (next != nullptr) && ((*next).next != nullptr) )
+    {
+        (*textGraph) << " " << (*next).word << " -> " << (*(*next).next).word << ";" << std::endl;
+        next = (*next).next;
+    }
+}
+
+
+void hashtable::graphDump(std::ofstream* textGraph)
+{
+    (*textGraph) << "digraph \n{\n";
+
+    for (size_t i = 0; i < this -> size_; i++)
+    {
+        (*textGraph) << " " << (lists_[i]).hash << " [shape=record, fillcolor = darkolivegreen, style = filled, label = \"List "
+        << i << " | Hash: " << (lists_[i]).hash << "\"]" << std::endl;
+
+        listGraphDump(textGraph, this -> lists_[i]);
+
+        (*textGraph) << " " << (lists_[i]).hash << " -> " << (*((lists_[i]).head)).word << "; \n" << std::endl;
+    }
+
+    (*textGraph) << "}";
+}
+
+/*void listGraph(FILE* graph, list* lst)
+{
+    printf("LISTGRAPH: \n");
+
+    fprintf(graph, "digraph \n{\n");
+
+    int next = lst -> head;
+
+    int i = 1;
+
+    while (i <= lst -> numOfEl)
+    {
+        fprintf(graph, " %d [shape=record, label = \" %d | {Addr: %d| Num: %d| Next: %d| Prev: %d} \" ] \n",
+                        i, i, next, (lst -> data[next]).num, (lst -> data[next]).next, (lst -> data[next]).prev);
+        next = (lst -> data[next]).next;
+        i++;
+    }
+
+    i = 1;
+
+    while (i < lst -> numOfEl)
+    {
+        fprintf(graph," %d -> %d; \n", i, i + 1);
+        i++;
+    }
+
+    fprintf(graph, "}");
+
+    printf("Graph has been created. Graph in graph.png.\n\n");
+}*/

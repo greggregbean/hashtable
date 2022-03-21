@@ -1,0 +1,13 @@
+digraph 
+{
+ 2 [shape=record, fillcolor = darkolivegreen, style = filled, label = "List 0 | Hash: 2"]
+ df [shape=record, fillcolor = darkolivegreen2, style = filled, label = " 1 | {Word: df| Addr: 0x561b9f554250| Next: 0x561b9f553e20} "]
+ dede [shape=record, fillcolor = darkolivegreen2, style = filled, label = " 2 | {Word: dede| Addr: 0x561b9f553e20| Next: 0} "]
+ df -> dede;
+ 2 -> df; 
+
+ 80 [shape=record, fillcolor = darkolivegreen, style = filled, label = "List 1 | Hash: 80"]
+ Mama [shape=record, fillcolor = darkolivegreen2, style = filled, label = " 1 | {Word: Mama| Addr: 0x561b9f554270| Next: 0} "]
+ 80 -> Mama; 
+
+}
